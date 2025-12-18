@@ -1,67 +1,56 @@
-import hmac
-import hashlib
-import base64
 import qrcode
 from io import BytesIO
+import hmac
+import hashlib
+import json
+import base64
+import os
 
-# -----------------------------
-# Registry Setup (Server Side)
-# -----------------------------
-# In a real system, this would be a secure database.
-# Verified issuers apply and get a secret key.
-registry = {
-    "starbucks-official": {
-        "secret": b"super-secret-key-starbucks-2025",  # Random, high-entropy bytes
-        "display_name": "Starbucks"
-    },
-    "mcdonalds-official": {
-        "secret": b"another-very-secret-key-mcd-2025",
-        "display_name": "McDonald's"
-    },
-    # Add more verified issuers here...
-}
+# Load registry
+with open('registry.json') as f:
+    registry = json.load(f)
 
-# Public mapping for scanners (could be bundled in app or fetched once)
-public_registry_info = {
-    "starbucks-official": "Starbucks",
-    "mcdonalds-official": "McDonald's"
-}
+SHORTENERS = ["bit.ly", "tinyurl.com", "t.co", "goo.gl", "buff.ly", "short.url"]
 
-# -----------------------------
-# QR Generation (Issuer Tool)
-# -----------------------------
-def generate_sealed_qr(issuer_id: str, payload: str) -> BytesIO:
+def has_shortened_url(payload: str) -> bool:
+    return any(short in payload.lower() for short in SHORTENERS)
+
+def generate_sealed_qr(issuer_id: str, payload: str, output_folder="examples"):
     if issuer_id not in registry:
-        raise ValueError("Unknown issuer")
+        raise ValueError(f"Unknown issuer: {issuer_id}")
     
-    secret = registry[issuer_id]["secret"]
+    entry = registry[issuer_id]
+    secret = entry["secret"].encode('utf-8')
     
-    # Normalize data for signing
     data_to_sign = payload.encode('utf-8')
-    
-    # Compute HMAC-SHA256
     mac = hmac.new(secret, data_to_sign, hashlib.sha256)
-    tag = mac.hexdigest()[:16]  # Use first 16 hex chars (~64 bits) for compactness
+    tag = mac.hexdigest()[:16]  # 64-bit security, tiny size
     
-    # Assemble QR content
     qr_content = f"seal:{issuer_id}|tag:{tag}|{payload}"
     
-    # Generate QR code
     qr = qrcode.QRCode(version=1, box_size=10, border=5)
     qr.add_data(qr_content)
     qr.make(fit=True)
     
     img = qr.make_image(fill_color="black", back_color="white")
-    buf = BytesIO()
-    img.save(buf, format='PNG')
-    buf.seek(0)
-    return buf
+    
+    os.makedirs(output_folder, exist_ok=True)
+    filename = f"{issuer_id.replace('-', '_')}_{hash(payload) % 10000}.png"
+    filepath = os.path.join(output_folder, filename)
+    img.save(filepath)
+    print(f"Sealed QR saved: {filepath}")
+    print(f"   Payload: {payload}")
+    print(f"   Trusted issuer: {entry['display_name']}")
+    if has_shortened_url(payload):
+        print("   (Shortened URL detected — seal enforced)")
 
-"""
-# Example usage
-payload = "https://bit.ly/starbucks-menu-dec2025"  # shortened URL
-issuer = "starbucks-official"
-sealed_qr_img = generate_sealed_qr(issuer, payload)
-# sealed_qr_img now contains the PNG bytes — save or display it
-"""
-
+# -----------------------------
+# Examples — run these
+# -----------------------------
+if __name__ == "__main__":
+    os.makedirs("examples", exist_ok=True)
+    
+    generate_sealed_qr("starbucks-official", "https://bit.ly/starbucks-menu-2025")
+    generate_sealed_qr("mcdonalds-official", "https://mcd.co/happy-meal-promo")
+    generate_sealed_qr("my-personal-site", "https://myblog.com/about")
+    generate_sealed_qr("starbucks-official", "https://starbucks.com/direct-no-shortener")  # direct link
