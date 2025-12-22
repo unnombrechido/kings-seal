@@ -1,35 +1,25 @@
-# Prior Art Disclosure and Idea Timestamp Record  
-**Hybrid Layered Trust System for QR Code Scanning**  
-**Inventor:** [Your Full Name Here]  
-**Date:** December 18, 2025  
+# King’s Seal
 
-## Purpose of This Document
-This document serves as a **public disclosure** of my original invention to establish myself as the originator and to create prior art. By publishing or archiving this dated description, I prevent others from patenting the same idea in the future. This is not a patent application — it is simply a clear, timestamped record of the idea.
+**A Hybrid Layered Trust System for Secure QR Code Scanning**
 
-## Simple Explanation (For Everyone)
-QR codes today are like unmarked envelopes — anyone can make one, and your phone often opens the link without enough caution. My invention adds three clear layers of trust to phone QR scanners (built into the camera or apps), inspired by physical mail:
+**Inventor:** Omar David Puente Trejo (unnombrechido)  
+**Date:** December 18, 2025
 
-1. **Personal Trust (Your Own Safe List)**  
-   You build a personal list of sources you trust. Once added, future QR codes from those sources open smoothly. Adding happens safely — only after successful use (e.g., page loads correctly), and automatically for obvious safe types like Wi-Fi passwords or plain text (no links).
+This repository serves as public disclosure and prior art for the King’s Seal system — a simple, effective way to make QR codes trustworthy in a world full of phishing and tampering.
 
-2. **Official Trust (The "Seal")**  
-   Verified companies/organizations add a digital "seal" via a registry. Scanners show a clear "Trusted" mark with the sender’s name. This seal is **required** for shortened URLs (tiny.url, bit.ly, etc.) — unsealed shortened-URL QRs get warnings.
+### Core Idea
+Three layers of trust, inspired by physical mail:
 
-3. **Caution for Everything Else**  
-   Unverified QRs show a prominent warning with full payload preview before any action.
+1. **Personal Trust** — Your own safe list of recurring domains you explicitly trust.
+2. **Official Seal** — Verified issuers embed a lightweight seal. Mandatory for shortened URLs or token-based links.
+3. **Caution** — Everything else gets a clear warning with preview.
 
-This protects against phishing (especially shortened URLs) while keeping QR codes accessible for casual use.
+No complex crypto for casual use. Strong protection where it matters.
 
-## Technical Summary
-The system evaluates scanned QR payloads in layers:
-- **Local Personal Trust**: User-guided allowlist with safe addition (post-success prompts, auto-add for Wi-Fi/plain-text).
-- **Global Verified Issuer**: Mandatory digital seal for shortened URLs; verified via registry signature.
-- **Default Caution**: Warnings + preview for all others.
+Full technical description and flowcharts in the original disclosure (archived here).
 
-Visual indicators differentiate levels; no one-click trust for risky payloads.
+Live prototype: https://unnombrechido.github.io/kings-seal-qr-trust-demo/
 
-I declare this idea originated with me on or before December 18, 2025.
+King’s Seal™ — Making QR codes safe again.
 
-Signed:  
-unnombrechido
-December 18, 2025
+© 2025 Omar David Puente Trejo. All rights reserved.
