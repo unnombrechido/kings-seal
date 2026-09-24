@@ -1,11 +1,11 @@
 {
-  "starbucks-official": {
-    "secret": "super-secret-key-starbucks-2025",
-    "display_name": "Starbucks"
+  "northside-coffee-official": {
+    "secret": "demo-secret-northside-coffee-2025",
+    "display_name": "Northside Coffee Co."
   },
-  "mcdonalds-official": {
-    "secret": "another-very-secret-key-mcd-2025",
-    "display_name": "McDonald's"
+  "riverbend-diner-official": {
+    "secret": "demo-secret-riverbend-diner-2025",
+    "display_name": "Riverbend Diner"
   },
   "my-personal-site": {
     "secret": "my-own-secret-for-testing-123",
