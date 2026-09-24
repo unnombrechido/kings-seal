@@ -48,8 +48,8 @@ def verify_sealed_qr(qr_content: str) -> dict:
 if __name__ == "__main__":
     # Paste a real QR string here after generating, or test these:
     tests = [
-        "seal:starbucks-official|tag:correcttaghere|https://bit.ly/starbucks-menu-2025",  # replace tag with real one from generate output
-        "seal:starbucks-official|tag:wrongwrong1234|https://bit.ly/starbucks-menu-2025",  # tampered
+        "seal:northside-coffee-official|tag:correcttaghere|https://bit.ly/northside-menu-2025",  # replace tag with real one from generate output
+        "seal:northside-coffee-official|tag:wrongwrong1234|https://bit.ly/northside-menu-2025",  # tampered
         "https://normal-site.com/no-seal",  # unsealed
     ]
     
