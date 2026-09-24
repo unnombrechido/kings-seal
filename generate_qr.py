@@ -50,7 +50,7 @@ def generate_sealed_qr(issuer_id: str, payload: str, output_folder="examples"):
 if __name__ == "__main__":
     os.makedirs("examples", exist_ok=True)
     
-    generate_sealed_qr("starbucks-official", "https://bit.ly/starbucks-menu-2025")
-    generate_sealed_qr("mcdonalds-official", "https://mcd.co/happy-meal-promo")
-    generate_sealed_qr("my-personal-site", "https://myblog.com/about")
-    generate_sealed_qr("starbucks-official", "https://starbucks.com/direct-no-shortener")  # direct link
+    generate_sealed_qr("northside-coffee-official", "https://bit.ly/northside-menu-2025")
+    generate_sealed_qr("riverbend-diner-official", "https://bit.ly/riverbend-lunch-special")
+    generate_sealed_qr("my-personal-site", "https://example.com/about")
+    generate_sealed_qr("northside-coffee-official", "https://example.com/northside/direct-menu")  # direct link
